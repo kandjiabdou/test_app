@@ -6,12 +6,7 @@
                 <v-icon start>mdi-account-group</v-icon>
                 <span class="text-h5">Gestion des Utilisateurs</span>
                 <v-spacer></v-spacer>
-                <v-btn 
-                    color="white" 
-                    variant="outlined" 
-                    prepend-icon="mdi-plus" 
-                    @click="openCreateDialog"
-                >
+                <v-btn color="white" variant="outlined" prepend-icon="mdi-plus" @click="openCreateDialog">
                     Nouvel utilisateur
                 </v-btn>
             </v-card-title>
@@ -22,14 +17,9 @@
             <v-card-text>
                 <v-row>
                     <v-col cols="12" md="6">
-                        <v-text-field
-                            v-model="searchText"
-                            label="Rechercher un utilisateur"
-                            prepend-inner-icon="mdi-magnify"
-                            variant="outlined"
-                            clearable
-                            density="compact"
-                        ></v-text-field>
+                        <v-text-field v-model="searchText" label="Rechercher un utilisateur"
+                            prepend-inner-icon="mdi-magnify" variant="outlined" clearable
+                            density="compact"></v-text-field>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -38,19 +28,10 @@
         <!-- Liste des utilisateurs -->
         <v-card>
             <v-card-text>
-                <v-data-table
-                    :headers="headers"
-                    :items="filteredUsers"
-                    :loading="loading"
-                    item-value="id"
-                    class="elevation-1"
-                >
+                <v-data-table :headers="headers" :items="filteredUsers" :loading="loading" item-value="id"
+                    class="elevation-1">
                     <template #[`item.role_name`]="{ item }">
-                        <v-chip
-                            :color="getRoleColor(item.role)"
-                            size="small"
-                            variant="flat"
-                        >
+                        <v-chip :color="getRoleColor(item.role)" size="small" variant="flat">
                             {{ item.role_name }}
                         </v-chip>
                     </template>
@@ -60,20 +41,10 @@
                     </template>
 
                     <template #[`item.actions`]="{ item }">
-                        <v-btn
-                            icon="mdi-pencil"
-                            size="small"
-                            variant="text"
-                            color="primary"
-                            @click="editUser(item)"
-                        ></v-btn>
-                        <v-btn
-                            icon="mdi-delete"
-                            size="small"
-                            variant="text"
-                            color="error"
-                            @click="deleteUser(item)"
-                        ></v-btn>
+                        <v-btn icon="mdi-pencil" size="small" variant="text" color="primary"
+                            @click="editUser(item)"></v-btn>
+                        <v-btn icon="mdi-delete" size="small" variant="text" color="error"
+                            @click="deleteUser(item)"></v-btn>
                     </template>
                 </v-data-table>
             </v-card-text>
@@ -85,45 +56,24 @@
                 <v-card-title class="text-h6">
                     {{ userDialog.mode === 'create' ? 'Créer un utilisateur' : 'Modifier l\'utilisateur' }}
                 </v-card-title>
-                
+
                 <v-card-text>
                     <v-form ref="userForm" v-model="userDialog.valid">
-                        <v-text-field
-                            v-model="userDialog.form.user_name"
-                            label="Nom d'utilisateur"
-                            :rules="userNameRules"
-                            variant="outlined"
-                            required
-                        ></v-text-field>
+                        <v-text-field v-model="userDialog.form.user_name" label="Nom d'utilisateur"
+                            :rules="userNameRules" variant="outlined" required></v-text-field>
 
-                        <v-select
-                            v-model="userDialog.form.role"
-                            :items="availableRoles"
-                            item-title="name"
-                            item-value="key"
-                            label="Rôle"
-                            :rules="roleRules"
-                            variant="outlined"
-                            required
-                        ></v-select>
+                        <v-select v-model="userDialog.form.role" :items="availableRoles" item-title="name"
+                            item-value="key" label="Rôle" :rules="roleRules" variant="outlined" required></v-select>
                     </v-form>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn 
-                        text 
-                        @click="userDialog.show = false"
-                        :disabled="userDialog.loading"
-                    >
+                    <v-btn text @click="userDialog.show = false" :disabled="userDialog.loading">
                         Annuler
                     </v-btn>
-                    <v-btn
-                        color="primary"
-                        :loading="userDialog.loading"
-                        :disabled="!userDialog.valid"
-                        @click="saveUser"
-                    >
+                    <v-btn color="primary" :loading="userDialog.loading" :disabled="!userDialog.valid"
+                        @click="saveUser">
                         {{ userDialog.mode === 'create' ? 'Créer' : 'Modifier' }}
                     </v-btn>
                 </v-card-actions>
@@ -131,11 +81,7 @@
         </v-dialog>
 
         <!-- Snackbar -->
-        <v-snackbar 
-            v-model="snackbar.show" 
-            :color="snackbar.color" 
-            :timeout="snackbar.timeout"
-        >
+        <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="snackbar.timeout">
             {{ snackbar.text }}
         </v-snackbar>
     </v-container>
@@ -144,9 +90,10 @@
 <script>
 import { userApiService } from '@/services/user.api.service';
 
+
 export default {
     name: 'AdminUsersSection',
-    
+
     data() {
         return {
             loading: false,

@@ -1,4 +1,5 @@
-const userService = require('../services/userService');
+const UserServiceFactory = require('../services/userServiceFactory');
+const userService = UserServiceFactory.getUserService();
 
 class UserController {
   /**

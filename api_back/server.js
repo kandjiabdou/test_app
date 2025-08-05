@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const userService = require('./services/userService');
+const UserServiceFactory = require('./services/userServiceFactory');
+const userService = UserServiceFactory.getUserService();
 
 // Import des routes
 const applicationRoutes = require('./routes/applicationRoutes');
